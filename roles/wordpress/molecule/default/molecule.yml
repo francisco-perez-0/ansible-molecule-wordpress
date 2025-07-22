@@ -1,22 +1,15 @@
----
 driver:
-  name: vagrant
-  provider:
-    name: virtualbox
+  name: docker
 
 platforms:
-  - name: Ubuntu
-    box: "ubuntu/focal64"
-    memory: 1024
-    interfaces:
-      - network_name: forwarded_port
-        guest: 80
-        host: 8888
+  - name: ubuntu
+    image: ubuntu:20.04
+    privileged: true
+    ports:
+      - "8888:80"
 
-  - name: RedHat
-    box: "rockylinux/9"
-    memory: 2048
-    interfaces:
-      - network_name: forwarded_port
-        guest: 80
-        host: 8889
+  - name: rockylinux
+    image: rockylinux/rockylinux:9
+    privileged: true
+    ports:
+      - "8889:80"

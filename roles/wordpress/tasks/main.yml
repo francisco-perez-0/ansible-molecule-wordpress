@@ -80,8 +80,10 @@
 
 - name: Aplicar permisos 755 a directorios
   ansible.builtin.file:
-    path: "{{ item.path }}" # Item.path es el path a uno de los archivos dentro de wordpress_dirs.files
+    path: "{{ item.path }}"
     mode: '0755'
+    owner: "{{ (ansible_os_family == 'RedHat') | ternary('apache', 'www-data') }}"
+    group: "{{ (ansible_os_family == 'RedHat') | ternary('apache', 'www-data') }}"
   loop: "{{ wordpress_dirs.files }}"
 
 - name: Otorgar permisos a archivos 644
@@ -94,6 +96,8 @@
   ansible.builtin.file:
     path: "{{ item.path }}"
     mode: '0644'
+    owner: "{{ (ansible_os_family == 'RedHat') | ternary('apache', 'www-data') }}"
+    group: "{{ (ansible_os_family == 'RedHat') | ternary('apache', 'www-data') }}"
   loop: "{{ wordpress_files.files }}"
 
 # - name: Setear permisos para directorios
