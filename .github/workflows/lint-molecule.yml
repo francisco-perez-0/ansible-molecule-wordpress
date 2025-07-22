@@ -17,8 +17,6 @@ jobs:
     steps:
       - name: Check out the codebase.
         uses: actions/checkout@v4
-        with:
-          path: 'roles/wordpress'
 
       - name: Set up Python 3.
         uses: actions/setup-python@v5
@@ -54,12 +52,6 @@ jobs:
 
       - name: Install test dependencies.
         run: pip3 install ansible molecule molecule-plugins[docker] docker
-
-      - name: Symlink role for Ansible Galaxy layout
-        run: |
-          mkdir -p roles
-          ln -sfn . roles/wordpress
-        working-directory: roles/wordpress
 
       - name: Run Molecule tests.
         run: molecule test
