@@ -10,7 +10,7 @@
     wordpress_db_password: wp-pass
   pre_tasks:
     - name: Instalar MariaDB server en RockyLinux
-      ansible.builtin.yum:
+      ansible.builtin.dnf:
         name: mariadb-server
         state: present
       when: ansible_os_family == "RedHat"
