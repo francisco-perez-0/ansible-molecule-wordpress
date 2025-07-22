@@ -13,3 +13,8 @@ platforms:
     privileged: true
     ports:
       - "8889:80"
+
+provisioner:
+  name: ansible
+  options:
+    become: false
