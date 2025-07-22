@@ -1,9 +1,9 @@
 ---
 - name: Prepare
   hosts: all
-  become: true
   tasks:
     - name: Instalar MariaDB en Rocky Linux
+      when: ansible_facts['distribution'] == 'Rocky'
       block:
         - name: Instalar repositorio EPEL
           ansible.builtin.dnf:
@@ -20,4 +20,3 @@
             name: mariadb
             state: started
             enabled: true
-      when: ansible_facts['distribution'] == 'Rocky'
