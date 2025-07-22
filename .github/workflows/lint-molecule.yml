@@ -1,42 +1,68 @@
-name: Molecule
-
-on:
+---
+name: CI
+'on':
+  pull_request:
   push:
     branches:
-      - main
-  pull_request:
-    branches:
-      - main
+      - master
+      - test-new-config
+  schedule:
+    - cron: "0 1 * * 3"
+
+defaults:
+  run:
+    working-directory: 'roles/wordpress'
 
 jobs:
+
   lint:
+    name: Lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Run ansible-lint
-        uses: ansible/ansible-lint@main
+      - name: Check out the codebase.
+        uses: actions/checkout@v4
+        with:
+          path: 'roles/wordpress'
+
+      - name: Set up Python 3.
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install test dependencies.
+        run: pip3 install yamllint
+
+      - name: Lint code.
+        run: |
+          yamllint .
+
   molecule:
+    name: Molecule
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        scenario: [default]
+        distro:
+          - rockylinux9
+          - ubuntu2204
+          - ubuntu2004
+          - debian11
+
     steps:
-      - uses: actions/checkout@v4
-      - name: Instalar Ansible
-        run: pip install ansible
-      - name: Install Ansible roles
-        run: ansible-galaxy install -r requirements.yml
-      - name: Install Ansible collections
-        run: ansible-galaxy collection install -r requirements.yml
-      - name: Install mysql 
-        run: ansible-galaxy collection install community.mysql
-      - name: List installed collections
-        run: ansible-galaxy collection list
-      - name: Run Molecule tests
-        uses: gofrolist/molecule-action@v2
+      - name: Check out the codebase.
+        uses: actions/checkout@v4
         with:
-          molecule_command: test
-          molecule_args: --scenario-name ${{ matrix.scenario }}
-          molecule_working_dir: roles/wordpress
+          path: 'roles/wordpress'
+
+      - name: Set up Python 3.
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install test dependencies.
+        run: pip3 install ansible molecule molecule-plugins[docker] docker
+      - name: Run Molecule tests.
+        run: molecule test
         env:
+          PY_COLORS: '1'
           ANSIBLE_FORCE_COLOR: '1'
+          MOLECULE_DISTRO: ${{ matrix.distro }}

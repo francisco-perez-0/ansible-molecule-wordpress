@@ -112,3 +112,6 @@
     src: wp-config.php.j2
     dest: "{{ wordpress_dir }}/wordpress/wp-config.php"
     mode: '0744'
+    owner: "{{ (ansible_os_family == 'RedHat') | ternary('apache', 'www-data') }}"
+    group: "{{ (ansible_os_family == 'RedHat') | ternary('apache', 'www-data') }}"
+  notify: Reiniciar Apache

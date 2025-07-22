@@ -2,19 +2,16 @@ driver:
   name: docker
 
 platforms:
-  - name: ubuntu
-    image: ubuntu:20.04
+  - name: instance
+    image: "geerlingguy/docker-${MOLECULE_DISTRO:-rockylinux9}-ansible:latest"
+    command: ${MOLECULE_DOCKER_COMMAND:-""}
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    cgroupns_mode: host
     privileged: true
-    ports:
-      - "8888:80"
-
-  - name: rockylinux
-    image: rockylinux/rockylinux:9
-    privileged: true
-    ports:
-      - "8889:80"
+    pre_build_image: true
 
 provisioner:
   name: ansible
-  options:
-    become: false
+  playbooks:
+    converge: ${MOLECULE_PLAYBOOK:-converge.yml}
