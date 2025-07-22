@@ -17,16 +17,16 @@ jobs:
         uses: ansible/ansible-lint@main
   molecule:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        scenario: [default]
     steps:
       - uses: actions/checkout@v4
-
-      - name: List molecule folder
-        run: ls -lR roles/wordpress/molecule/default
-
       - name: Run Molecule tests
         uses: gofrolist/molecule-action@v2
         with:
           molecule_command: test
+          molecule_args: --scenario-name ${{ matrix.scenario }}
           molecule_working_dir: roles/wordpress/molecule/default
         env:
           ANSIBLE_FORCE_COLOR: '1'
