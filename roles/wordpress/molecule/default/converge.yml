@@ -2,7 +2,7 @@
 - name: Instalar Wordpress con MySQL
   hosts: all
   gather_facts: true
-  become: true
+  # become: true
   vars:
     wordpress_db_name: wp_db
     wordpress_db_host: localhost
