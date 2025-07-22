@@ -54,6 +54,13 @@ jobs:
 
       - name: Install test dependencies.
         run: pip3 install ansible molecule molecule-plugins[docker] docker
+
+      - name: Symlink role for Ansible Galaxy layout
+        run: |
+          mkdir -p roles
+          ln -sfn . roles/wordpress
+        working-directory: roles/wordpress
+
       - name: Run Molecule tests.
         run: molecule test
         working-directory: roles/wordpress
