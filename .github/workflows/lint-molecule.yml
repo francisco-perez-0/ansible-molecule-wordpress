@@ -36,4 +36,4 @@ jobs:
           molecule_working_dir: roles/wordpress
         env:
           ANSIBLE_FORCE_COLOR: '1'
-          ANSIBLE_COLLECTIONS_PATHS: ./collections
+          ANSIBLE_COLLECTIONS_PATH: ./collections
