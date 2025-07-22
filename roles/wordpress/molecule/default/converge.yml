@@ -26,6 +26,11 @@
     - name: Mostrar paths de colecciones
       ansible.builtin.debug:
         var: ansible_collections_path
+    - name: Instalar EPEL en RockyLinux
+      ansible.builtin.dnf:
+        name: epel-release
+        state: present
+      when: ansible_os_family == "RedHat"
   roles:
     - role: wordpress
       vars:
@@ -34,7 +39,6 @@
         wordpress_apache_dir: "/var/www/{{ wordpress_apache_server_name }}/wordpress"
     - role: geerlingguy.mysql
       vars:
-        mysql_daemon: mysqld
         mysql_server_id: "1"
         mysql_max_binlog_size: "100M"
         mysql_binlog_format: "ROW"
