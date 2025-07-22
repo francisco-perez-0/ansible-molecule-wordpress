@@ -2,35 +2,11 @@
 - name: Instalar Wordpress con MySQL
   hosts: all
   gather_facts: true
-  # become: true
   vars:
     wordpress_db_name: wp_db
     wordpress_db_host: localhost
     wordpress_db_user: wp-user
     wordpress_db_password: wp-pass
-  pre_tasks:
-    - name: Verificar si mariadb-server está instalado
-      ansible.builtin.shell: rpm -q mariadb-server
-      register: mariadb_installed
-      ignore_errors: true
-
-    - name: Mostrar resultado de rpm -q mariadb-server
-      ansible.builtin.debug:
-        var: mariadb_installed
-    - name: Obtener info de sistema para debug
-      ansible.builtin.debug:
-        msg: |
-          os_family: {{ ansible_os_family }}
-          distribution: {{ ansible_distribution }}
-          major_version: {{ ansible_distribution_major_version }}
-    - name: Mostrar paths de colecciones
-      ansible.builtin.debug:
-        var: ansible_collections_path
-    - name: Instalar EPEL en RockyLinux
-      ansible.builtin.dnf:
-        name: epel-release
-        state: present
-      when: ansible_os_family == "RedHat"
   roles:
     - role: wordpress
       vars:
