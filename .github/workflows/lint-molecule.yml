@@ -25,7 +25,9 @@ jobs:
       - name: Install Ansible roles
         run: ansible-galaxy install -r requirements.yml
       - name: Install Ansible collections
-        run: ansible-galaxy collection install -r requirements.yml
+        run: ansible-galaxy collection install -r requirements.yml -p ./collections
+      - name: List installed collections
+        run: ansible-galaxy collection list
       - name: Run Molecule tests
         uses: gofrolist/molecule-action@v2
         with:
@@ -34,3 +36,4 @@ jobs:
           molecule_working_dir: roles/wordpress
         env:
           ANSIBLE_FORCE_COLOR: '1'
+          ANSIBLE_COLLECTIONS_PATHS: ./collections

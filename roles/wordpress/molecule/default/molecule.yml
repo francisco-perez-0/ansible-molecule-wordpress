@@ -18,3 +18,4 @@ provisioner:
   name: ansible
   options:
     become: false
+    remote_user: root

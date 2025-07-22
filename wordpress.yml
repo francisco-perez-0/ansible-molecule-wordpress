@@ -1,6 +1,5 @@
 - name: Instalar Wordpress con MySQL
   hosts: all
-  become: true
   vars:
     wordpress_db_name: wp_db
     wordpress_db_host: localhost
