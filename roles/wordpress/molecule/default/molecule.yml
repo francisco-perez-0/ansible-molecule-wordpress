@@ -1,0 +1,22 @@
+---
+driver:
+  name: vagrant
+  provider:
+    name: virtualbox
+
+platforms:
+  - name: Ubuntu
+    box: "ubuntu/focal64"
+    memory: 1024
+    interfaces:
+      - network_name: forwarded_port
+        guest: 80
+        host: 8888
+
+  - name: RedHat
+    box: "rockylinux/9"
+    memory: 2048
+    interfaces:
+      - network_name: forwarded_port
+        guest: 80
+        host: 8889
