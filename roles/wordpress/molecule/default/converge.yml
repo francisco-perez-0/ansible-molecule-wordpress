@@ -23,8 +23,6 @@
         wordpress_apache_dir: "/var/www/{{ wordpress_apache_server_name }}/wordpress"
     - role: geerlingguy.mysql
       vars:
-        mysql_daemon: mariadb
-        mysql_service_name: mariadb
         mysql_server_id: "1"
         mysql_max_binlog_size: "100M"
         mysql_binlog_format: "ROW"
