@@ -18,8 +18,4 @@ provisioner:
   name: ansible
   options:
     become: false
-  env:
-    ANSIBLE_COLLECTIONS_PATHS: ./collections
-  config_options:
-    defaults:
-      collections_path: ./collections
+
