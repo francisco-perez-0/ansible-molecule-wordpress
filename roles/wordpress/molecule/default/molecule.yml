@@ -15,3 +15,9 @@ provisioner:
   name: ansible
   playbooks:
     converge: ${MOLECULE_PLAYBOOK:-converge.yml}
+  
+dependency:
+  name: galaxy
+  options:
+    role-file: requirements.yml
+    roles-path: ../../..
