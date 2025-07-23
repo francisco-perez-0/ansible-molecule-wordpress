@@ -93,13 +93,11 @@
 - name: Aplicar permisos 644 a archivos
   ansible.builtin.file:
     path: "{{ item.path }}"
-    state: touch
     mode: '0644'
     owner: "{{ (ansible_os_family == 'RedHat') | ternary('apache', 'www-data') }}"
     group: "{{ (ansible_os_family == 'RedHat') | ternary('apache', 'www-data') }}"
-    modification_time: preserve
-    access_time: preserve
   loop: "{{ wordpress_files.files }}"
+  changed_when: false
 
 # - name: Setear permisos para directorios
 #  shell: "/usr/bin/find {{ wordpress_dir }}/wordpress/ -type d -exec chmod 750 {} \\;"
@@ -113,7 +111,9 @@
     src: wp-config.php.j2
     dest: "{{ wordpress_dir }}/wordpress/wp-config.php"
     mode: '0744'
+  when: not skip_wp_config | default(false)
   register: wp_config_result
+  changed_when: false
 
 - name: Marcar que no hubo cambio en wp-config
   ansible.builtin.set_fact:
