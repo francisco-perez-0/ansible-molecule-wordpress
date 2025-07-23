@@ -28,7 +28,6 @@
     dest: /etc/httpd/conf.d/001-wp.conf
     mode: '0744'
   when: ansible_os_family == "RedHat"
-  notify: Reiniciar Apache
 
 - name: Instalar PHP
   ansible.builtin.package:
