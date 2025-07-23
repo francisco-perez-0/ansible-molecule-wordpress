@@ -1,8 +1,7 @@
 ---
-dependency: []
-
 galaxy_info:
   role_name: wordpress
+  namespace: mikroways
   author: FranciscoPerez
   description: "Instala y configura WordPress con Apache y PHP, compatible con Ubuntu/Debian y Rocky/RedHat."
   company: "Mikroways"
