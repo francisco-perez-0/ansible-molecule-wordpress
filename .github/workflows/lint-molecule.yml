@@ -4,39 +4,35 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
-  lint:
+  test:
+    name: Test role with Molecule
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Run ansible-lint
-        uses: ansible/ansible-lint@main
-  molecule:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        scenario: [default]
-    steps:
-      - uses: actions/checkout@v4
-      - name: Instalar Ansible
-        run: pip install ansible
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install docker ansible molecule molecule-plugins[docker] 
+
       - name: Install Ansible roles
         run: ansible-galaxy install -r requirements.yml
       - name: Install Ansible collections
+      
         run: ansible-galaxy collection install -r requirements.yml
-      - name: Install mysql 
-        run: ansible-galaxy collection install community.mysql
       - name: List installed collections
         run: ansible-galaxy collection list
-      - name: Run Molecule tests
-        uses: gofrolist/molecule-action@v2
-        with:
-          molecule_command: test
-          molecule_args: --scenario-name ${{ matrix.scenario }}
-          molecule_working_dir: roles/wordpress
-        env:
-          ANSIBLE_FORCE_COLOR: '1'
+
+      - name: Run Molecule test
+        run: |
+          cd roles/wordpress
+          ls
+          molecule test

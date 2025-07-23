@@ -8,7 +8,7 @@
     wordpress_db_user: wp-user
     wordpress_db_password: wp-pass
   roles:
-    - role: wordpress
+    - role: ../../..
       vars:
         wordpress_apache_server_name: localhost
         wordpress_dir: "/var/www/{{ wordpress_apache_server_name }}"
