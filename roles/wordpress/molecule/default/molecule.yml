@@ -9,7 +9,7 @@ platforms:
       - "8888:80"
 
   - name: rockylinux
-    image: rockylinux/rockylinux:9
+    image: geerlingguy/docker-rockylinux9-ansible
     privileged: true
     ports:
       - "8889:80"
