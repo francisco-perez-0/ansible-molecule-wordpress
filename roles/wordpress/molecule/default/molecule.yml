@@ -11,6 +11,7 @@ platforms:
   - name: rockylinux
     image: geerlingguy/docker-rockylinux9-ansible
     privileged: true
+    command: /sbin/init
     ports:
       - "8889:80"
 
