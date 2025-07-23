@@ -13,20 +13,3 @@
         wordpress_apache_server_name: localhost
         wordpress_dir: "/var/www/{{ wordpress_apache_server_name }}"
         wordpress_apache_dir: "/var/www/{{ wordpress_apache_server_name }}/wordpress"
-    # - role: geerlingguy.mysql
-    #  vars:
-    #    mysql_manage_service: false
-    #    mysql_server_id: "1"
-    #    mysql_max_binlog_size: "100M"
-    #    mysql_binlog_format: "ROW"
-    #    mysql_expire_logs_days: "10"
-    #    mysql_replication_role: ''
-    #    mysql_replication_master: "localhost"
-    #    mysql_replication_user: {}
-    #    mysql_databases:
-    #      - name: "{{ wordpress_db_name }}"
-    #    mysql_users:
-    #      - name: "{{ wordpress_db_user }}"
-    #        host: "localhost"
-    #        password: "{{ wordpress_db_password }}"
-    #        priv: "{{ wordpress_db_name }}.*:ALL"

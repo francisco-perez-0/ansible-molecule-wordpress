@@ -63,14 +63,6 @@
     remote_src: true
     creates: "{{ wordpress_dir }}/wordpress"
 
-- name: Otorgar permisos al grupo
-  ansible.builtin.file:
-    path: "{{ wordpress_dir }}/wordpress"
-    state: directory
-    owner: "{{ (ansible_os_family == 'RedHat') | ternary('apache', 'www-data') }}"
-    group: "{{ (ansible_os_family == 'RedHat') | ternary('apache', 'www-data') }}"
-    recurse: true
-
 - name: Otorgar permisos para directorios a 755
   ansible.builtin.find:
     paths: "{{ wordpress_dir }}/wordpress"
@@ -80,9 +72,12 @@
 - name: Aplicar permisos 755 a directorios
   ansible.builtin.file:
     path: "{{ item.path }}"
+    state: touch
     mode: '0755'
     owner: "{{ (ansible_os_family == 'RedHat') | ternary('apache', 'www-data') }}"
     group: "{{ (ansible_os_family == 'RedHat') | ternary('apache', 'www-data') }}"
+    modification_time: preserve
+    access_time: preserve
   loop: "{{ wordpress_dirs.files }}"
 
 - name: Otorgar permisos a archivos 644
@@ -94,9 +89,12 @@
 - name: Aplicar permisos 644 a archivos
   ansible.builtin.file:
     path: "{{ item.path }}"
+    state: touch
     mode: '0644'
     owner: "{{ (ansible_os_family == 'RedHat') | ternary('apache', 'www-data') }}"
     group: "{{ (ansible_os_family == 'RedHat') | ternary('apache', 'www-data') }}"
+    modification_time: preserve
+    access_time: preserve
   loop: "{{ wordpress_files.files }}"
 
 # - name: Setear permisos para directorios
@@ -111,3 +109,4 @@
     src: wp-config.php.j2
     dest: "{{ wordpress_dir }}/wordpress/wp-config.php"
     mode: '0744'
+    changed_when: false
