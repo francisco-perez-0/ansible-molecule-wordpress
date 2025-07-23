@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  lint: 
+  lint:
     name: Lint Ansible Role
     runs-on: ubuntu-latest
     steps:
@@ -40,7 +40,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install docker ansible molecule molecule-plugins[docker] 
+          pip install docker ansible molecule molecule-plugins[docker]
 
       - name: Run Molecule test
         run: |
