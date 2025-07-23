@@ -23,14 +23,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install docker ansible molecule molecule-plugins[docker] 
 
-      - name: Install Ansible roles
-        run: ansible-galaxy install -r requirements.yml
-      - name: Install Ansible collections
-      
-        run: ansible-galaxy collection install -r requirements.yml
-      - name: List installed collections
-        run: ansible-galaxy collection list
-
       - name: Run Molecule test
         run: |
           cd roles/wordpress
