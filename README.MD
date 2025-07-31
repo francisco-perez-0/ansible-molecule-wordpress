@@ -48,7 +48,7 @@ This repository contains an Ansible role to install and configure WordPress with
 ansible-playbook -i inventory your-playbook.yml
 ```
 Directory structure
-
+```
 roles/
 └── wordpress/
     ├── tasks/
@@ -59,10 +59,6 @@ roles/
     ├── molecule/
     ├── meta/
     └── README.md
-
-Contributing
-
-Contributions, issues, and feature requests are welcome. Feel free to open issues or submit pull requests.
-License
+```
 
 This project is licensed under the MIT License.
